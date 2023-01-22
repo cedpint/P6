@@ -23,8 +23,9 @@ app.use(cors());
 
 app.use(express.json());
 
-app.post('/api/auth/singup', (req,res) =>{
+app.post('/api/auth/singup', async (req,res) => {
     console.log(req.body);
+    await User.create({ email: req.body.email, password: req.body.password });
     res.send('ok');
 });
 
