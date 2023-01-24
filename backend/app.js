@@ -49,7 +49,6 @@ app.post('/api/auth/signup', async (req,res) => {
      .catch(() => {
         res.status(500).json({ error: "Erreur lors du hashage du mot de passe" });
      }); 
-    
 });
 
 
