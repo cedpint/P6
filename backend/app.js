@@ -7,12 +7,12 @@ const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
 
 mongoose
-.connect ("mongodb+srv://piiquante:piiquante@cluster0.aw1rvuo.mongodb.net/?retryWrites=true&w=majority")                 
+.connect ("mongodb+srv://piiquante:piiquante@cluster0.otlnlvk.mongodb.net/?retryWrites=true&w=majority")                 
 .then(() => {
     console.log('MongoDB connecté');
 })
-.catch(() => {
-    console.log('MongoDB erreur');
+.catch((error) => {
+    console.log(error);
 });
 
 app.listen("3000", () => {
@@ -28,6 +28,8 @@ const userSchema = new Schema({
 
 const User = mongoose.model('User', userSchema);  
 
+
+
 //middleware permettant au frontend de se connecter a l'API//
 app.use(cors());
 
@@ -35,7 +37,7 @@ app.use(express.json());
 
 //creation d'un nouvel utilisateur dans la base de données//
 app.get('/', async (req, res) => {
-    await User.create({ email: "example@test.tes", password: "test"});
+    await User.create({ email: "example@test.test", password: "test"});
     res.send('ok');
 });
 
@@ -72,14 +74,14 @@ app.post('/api/auth/login', (req, res) => {
 
     User.findOne({ email : email }).then((user) => {
         if(!user) {
-            return res.status(404).json({error : "Utilisateur introuvable"});
+            return res.status(404).json({error : "Paire identification/mot de passe incorrecte"});
         }
 
         bcrypt
         .compare(password, user.password)
         .then((valid) => {
             if(!valid){
-               return res.status(400).json({error : "Mot de passe non valide"});
+               return res.status(400).json({error : "Paire identification/mot de passe incorrecte"});
             }
 
             return res.status(200).json({
