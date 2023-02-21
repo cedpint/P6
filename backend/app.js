@@ -28,7 +28,20 @@ const userSchema = new Schema({
 
 const User = mongoose.model('User', userSchema);  
 
+const sauceSchema = new Schema({
+    userId: String,
+    name: String,
+    manufacturer: String,
+    description: String,
+    mainPepper: String,
+    imageurl : String,
+    likes: Number,
+    dislikes: Number,
+    usersLiked: [String],
+    userDisliked: [String]
+});
 
+const Sauce = mongoose.model('Sauce', sauceSchema);
 
 //middleware permettant au frontend de se connecter a l'API//
 app.use(cors());
@@ -101,4 +114,26 @@ app.post('/api/auth/login', (req, res) => {
             return res.status(500).json({ error : "Erreur lors de la comparaison du mot de passe" });
         });
     });
+});
+
+//Routes sauces qui renvoie contenu base de données
+
+app.get('/api/sauces', (req, res) => {
+    Sauce.find()
+    .then((sauces) => {
+        return res.status(200).json(sauces);
+    });
+});
+
+//Fonction permettant d'ajouter des sauces
+
+app.post('/api/sauces', (req, res) => {
+    const { sauce } = req.body;
+
+    Sauce.create(sauce)
+    .then((createdSauce) => {
+        console.log(createdSauce);
+        return res.status(201).json({message: "Sauce créée" });
+    });
+
 });
