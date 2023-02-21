@@ -1,9 +1,11 @@
+const mongoose = require("mongoose");
 const express = require("express");
 const router = express.Router();
+const Sauce = require("../models/sauce.model");
 
-//Routes sauces qui renvoie contenu base de données
+//Route sauces qui renvoie contenu base de données
 
-router.get('/api/sauces', (req, res) => {
+router.get('/', (req, res) => {
     Sauce.find()
     .then((sauces) => {
         return res.status(200).json(sauces);
@@ -12,7 +14,7 @@ router.get('/api/sauces', (req, res) => {
 
 //Fonction permettant d'ajouter des sauces
 
-router.post('/api/sauces', (req, res) => {
+router.post('/', (req, res) => {
     const { sauce } = req.body;
 
     Sauce.create(sauce)
@@ -23,4 +25,4 @@ router.post('/api/sauces', (req, res) => {
 
 });
 
-module.exports = sauceRoute ;
+module.exports = router ;

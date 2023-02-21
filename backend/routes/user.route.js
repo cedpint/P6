@@ -1,12 +1,13 @@
 const mongoose = require("mongoose");
 const express = require("express");
+const User = require("../models/user.model");
 const router = express.Router();
 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 
-router.post('/api/auth/signup', async (req, res) => {
+router.post('/signup', async (req, res) => {
     const { email, password } = req.body;
 
     if(!email || !password) {
@@ -28,7 +29,8 @@ router.post('/api/auth/signup', async (req, res) => {
 });
 
 //Route login + token stockage de la session utilisateur 
-router.post('/api/auth/login', (req, res) => {
+router.post('/login', (req, res) => {
+    console.log(req);
     const { email, password } = req.body;
 
     if(!email || !password) {
@@ -66,4 +68,4 @@ router.post('/api/auth/login', (req, res) => {
     });
 });
 
-module.exports = userRoute;
+module.exports = router;

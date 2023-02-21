@@ -22,11 +22,16 @@ app.listen("3000", () => {
     console.log("serveur ok")
 });
 
-
-//middleware permettant au frontend de se connecter a l'API//
 app.use(cors());
 
 app.use(express.json());
+
+app.use("/api/sauces", sauceRoute);
+app.use("/api/auth", userRoute);
+
+//middleware permettant au frontend de se connecter a l'API//
+
+
 
 //creation d'un nouvel utilisateur dans la base de données//
 app.get('/', async (req, res) => {
