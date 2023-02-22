@@ -30,7 +30,7 @@ router.post('/signup', async (req, res) => {
 
 //Route login + token stockage de la session utilisateur 
 router.post('/login', (req, res) => {
-    console.log(req);
+    
     const { email, password } = req.body;
 
     if(!email || !password) {

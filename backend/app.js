@@ -32,7 +32,6 @@ app.use("/api/auth", userRoute);
 //middleware permettant au frontend de se connecter a l'API//
 
 
-
 //creation d'un nouvel utilisateur dans la base de données//
 app.get('/', async (req, res) => {
     await User.create({ email: "example@test.test", password: "test"});
