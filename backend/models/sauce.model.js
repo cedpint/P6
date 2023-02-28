@@ -7,7 +7,7 @@ const sauceSchema = new Schema({
     manufacturer: String,
     description: String,
     mainPepper: String,
-    imageurl : String,
+    imageUrl : String,
     likes: Number,
     dislikes: Number,
     usersLiked: [String],

@@ -8,6 +8,7 @@ const User = require("./models/user.model");
 const Sauce = require("./models/sauce.model");
 const userRoute = require("./routes/user.route");
 const sauceRoute = require("./routes/sauce.route");
+const path = require("path");
 
 mongoose
 .connect ("mongodb+srv://piiquante:piiquante@cluster0.otlnlvk.mongodb.net/?retryWrites=true&w=majority")                 
@@ -24,10 +25,13 @@ app.listen("3000", () => {
 
 app.use(cors());
 
+
 app.use(express.json());
 
 app.use("/api/sauces", sauceRoute);
 app.use("/api/auth", userRoute);
+app.use('/images', express.static(path.join(__dirname, 'images')));
+
 
 //middleware permettant au frontend de se connecter a l'API//
 
