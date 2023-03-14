@@ -5,9 +5,9 @@ const cors = require("cors");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("./models/user.model");
-const Sauce = require("./models/sauce.model");
-const userRoute = require("./routes/user.route");
+
 const sauceRoute = require("./routes/sauce.route");
+const userRoute = require("./routes/user.route");
 const path = require("path");
 
 mongoose
@@ -25,15 +25,12 @@ app.listen("3000", () => {
 
 app.use(cors());
 
-
 app.use(express.json());
 
-app.use("/api/sauces", sauceRoute);
 app.use("/api/auth", userRoute);
+app.use("/api/sauces", sauceRoute);
 app.use('/images', express.static(path.join(__dirname, 'images')));
-
-
-//middleware permettant au frontend de se connecter a l'API//
+app.put("/api/sauces", sauceRoute);
 
 
 //creation d'un nouvel utilisateur dans la base de données//
@@ -42,5 +39,4 @@ app.get('/', async (req, res) => {
     res.send('ok');
 });
 
-
-
+module.exports = app;
