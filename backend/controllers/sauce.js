@@ -65,12 +65,14 @@ exports.deleteSauce = (req, res, next) => {
 
 //Like and dislike function
 exports.likeDislike = (req, res, next) => {
+   
+
     if (req.body.like === 1) {
-        Sauce.updateOne({ _id: req.params.id }, {$inc: { likes: req.body.like++ }, $push: { usersLiked: req.body.userId } })
+        Sauce.updateOne({ _id: req.params.id }, {$inc: { likes: 1 }, $push: { usersLiked: req.body.userId } })
         .then(() => res.status(200).json({ message: 'Like ajoutée !'}))
         .catch(error => res.status(400).json({ error }))
     } else if (req.body.like === -1) {
-        Sauce.updateOne({ _id: req.params.id}, { $inc: { dislikes: req.body.like++ * -1 }, $push: { usersDisliked: req.body.userId } })
+        Sauce.updateOne({ _id: req.params.id}, { $inc: { dislikes: 1 }, $push: { usersDisliked: req.body.userId } })
         .then(() => res.status(200).json({ message: 'Dislike ajoutée !' }))
         .catch(error => res.status(400).json({ error }))
     } else { 
