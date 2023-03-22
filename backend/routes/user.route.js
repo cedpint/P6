@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+
+// Import express app
 const express = require("express");
 const router = express.Router();
 
@@ -9,10 +11,8 @@ const jwt = require("jsonwebtoken");
 //Controllers importation
 const userCtrl = require('../controllers/user');
 
-//Signup function
+//User routes
 router.post('/signup', userCtrl.signup);
-
-//Login + token stockage de la session utilisateur 
 router.post('/login', userCtrl.login);
 
 module.exports = router;

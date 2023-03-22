@@ -19,8 +19,8 @@ exports.signup = (req, res, next) => {
         }
         return res.status(201).json({ message: "Uilisateur créé" });
      }) 
-     .catch(() => {
-        res.status(500).json({ error: "Erreur lors du hashage du mot de passe" });
+     .catch((error) => {
+        res.status(500).json({ error });
      });   
 };
 

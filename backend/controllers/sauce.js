@@ -39,22 +39,30 @@ exports.modifySauce = (req, res, next) => {
         ...JSON.parse(req.body.sauce),
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     } : {...req.body};
-// Application des paramètres sauceObject
-    Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id})
-    .then(() => res.status(200).json({ message: 'Sauce Modifiée !'}))
-    .catch(error => res.status(401).json({ error }));
+    Sauce.findOne({_id: req.params.id})
+    .then((sauce )=>{
+        console.log(sauce);
+        fs.unlink(`images/${sauce.imageUrl.split('/images/')[1]}`, () => {
+            // Delete the object on the data base
+            Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id})
+            .then(() => res.status(200).json({ message: 'Sauce Modifiée !'}))
+            .catch(error => res.status(401).json({ error }));
+        })
+    })
+    
+//Params sauceObject application
+   
 }
 
- 
 //Delete function
 exports.deleteSauce = (req, res, next) => {
-//Recherche de l'objet afin d'obtenir l'URL de l'image afin de la supprimer également
+//Object search to get image url to delete
     Sauce.findOne({ _id: req.params.id })
         .then(sauce => {
             const filename = sauce.imageUrl.split('/images/')[1]
-            // J'appelle unlink pour supprimer le fichier
+            // Call unlink to delete the file
             fs.unlink(`images/${filename}`, () => {
-                // Je supprimer l'objet de la base de données
+                // Delete the object on the data base
                 Sauce.deleteOne({ _id: req.params.id })
                     .then(() => res.status(200).json({ message: 'Sauce supprimée !' }))
                     .catch(error => res.status(400).json({ error: error }))
