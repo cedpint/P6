@@ -10,15 +10,15 @@ const sauceRoute = require("./routes/sauce.route");
 const userRoute = require("./routes/user.route");
 const path = require("path");
 
+require('dotenv').config();
+
 //MongoDB connexion
-mongoose
-.connect ("mongodb+srv://piiquante:piiquante@cluster0.otlnlvk.mongodb.net/?retryWrites=true&w=majority")                 
-.then(() => {
-    console.log('MongoDB connecté');
-})
-.catch((error) => {
-    console.log(error);
-});
+mongoose.connect(process.env.MONGO_URL,
+    { useNewUrlParser: true,
+      useUnifiedTopology: true })
+    .then(() => console.log('Connexion à MongoDB réussie !'))
+    .catch(() => console.log('Connexion à MongoDB échouée !'));
+    
 
 // Use CORS to allow the front-end and back-end to communicate because they have different origins.
 app.use(cors());
