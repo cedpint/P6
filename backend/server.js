@@ -3,7 +3,7 @@ const http = require('http');
 // Import app's express
 const app = require('./app');
 
-// teste et renvoie le port d'après les paramètres passés
+// Port test and send 
 const normalizePort = (val) => {
 	const port = parseInt(val, 10);
 
@@ -16,12 +16,12 @@ const normalizePort = (val) => {
 	return false;
 };
 
-// détermine le port d'écoute, en premier celui défini dans les variables d'environnement, sinon 3000
+// Port listener
 const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 
-// constante qui récupère la valeur d'erreur 
+// Error default
 const errorHandler = (error) => {
 	if (error.syscall !== 'listen') {
 		throw error;
@@ -29,12 +29,12 @@ const errorHandler = (error) => {
 	const address = server.address();
 	const bind = typeof address === 'string' ? 'pipe ' + address : 'port: ' + port;
 	switch (error.code) {
-		// Autorisation refusée
+		// Acces denied
 		case 'EACCES':
 			console.error(bind + ' requires elevated privileges.');
 			process.exit(1);
 			break;
-		// Adresse déjà utilisée
+		// address used
 		case 'EADDRINUSE':
 			console.error(bind + ' is already in use.');
 			process.exit(1);
@@ -44,18 +44,17 @@ const errorHandler = (error) => {
 	}
 };
 
-// création du serveur en passant l'application express
+// Express app create
 const server = http.createServer(app);
 
-// gestion des erreurs serveur
+// Errors server 
 server.on('error', errorHandler);
 
-// met en écoute et affiche dans la console le port utilisé
+// Listening and console inforation
 server.on('listening', () => {
 	const address = server.address();
 	const bind = typeof address === 'string' ? 'pipe ' + address : 'port ' + port;
 	console.log('Listening on ' + bind);
 });
 
-// serveur en écoute
 server.listen(port);
